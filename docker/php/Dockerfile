@@ -86,9 +86,9 @@ FROM base AS dev
 
 USER root
 
-RUN pecl install xdebug && docker-php-ext-enable xdebug
+#RUN pecl install xdebug && docker-php-ext-enable xdebug
 
-COPY ./docker/php/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-COPY ./docker/php/error_reporting.ini /usr/local/etc/php/conf.d/error_reporting.ini
+#COPY ./docker/php/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+#COPY ./docker/php/error_reporting.ini /usr/local/etc/php/conf.d/error_reporting.ini
 
 USER $user
