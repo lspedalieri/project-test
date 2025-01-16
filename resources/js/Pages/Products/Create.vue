@@ -1,35 +1,19 @@
 <script setup>
-    import InputField from '@/Components/InputField.vue';
-    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-    import { useForm, Link } from "@inertiajs/vue3";
-    
-    const props = defineProps({
-      item: {
-        type: Object,
-        default: null,
-      },
+    import { onMounted } from 'vue';
+
+    const props = defineProps({ userId:Number }); 
+    onMounted(() => {
+        // const props = defineProps({ id:Number }); // ❌ move to top level
+        console.log(props.userId);
     });
-    
-    const form = useForm({
-      name: props.item.name,
-      price: props.item.price,
-      description: props.item.description,
-      barcode: props.item.barcode,  
-      quantity: props.item.quantity,
-      restockTime: props.item.restock_time,
-    });
-    
-    const submit = () => {
-      form.put(`/products/store/${props.item.id}`);
-    };
-    </script>
-    
-    <template>
-        <Head title="Manage Products" />
-    
+</script>
+
+
+<template>
+        <head title="Create Products"/>
         <AuthenticatedLayout>
             <template #header>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Edit Product</h2>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Create Product {{ props.userId }} sdsd</h2>
             </template>
     
             <div class="py-12">
@@ -38,7 +22,7 @@
                         <div class="p-6 text-gray-900">
                             <Link href="/products"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Back</button></Link>
                             
-                            <form @submit.prevent="submit">
+                            <form @submit.prevent="store">
                                 <InputField 
                                     label="Name" 
                                     id="name"
@@ -91,8 +75,16 @@
                                     placeholder="Enter Quantity" 
                                     v-model="form.quantity"
                                     :error="form.errors.quantity"
-                                />                                
-    
+                                />
+
+                                <InputField 
+                                    id="user_id"
+                                    type="hidden" 
+                                    placeholder="Enter Quantity" 
+                                    v-model="props.userId"
+                                    :error="form.errors.userId"
+                                />
+
                                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3 text-white">
                                     Submit
                                 </button>
@@ -105,3 +97,57 @@
             </div>
         </AuthenticatedLayout>
     </template>
+
+<script>
+import { Head, Link } from '@inertiajs/vue3'
+import TextInput from '@/Shared/TextInput.vue'
+import SelectInput from '@/Shared/SelectInput.vue'
+import LoadingButton from '@/Shared/LoadingButton.vue'
+import InputField from '@/Components/InputField.vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { toRefs, defineProps } from 'vue';
+
+
+// const props = defineProps({ userId: Number });
+// const { userId } = toRefs(props);
+
+export default {
+    // props: {
+    //     userId: {
+    //         type: Number,
+    //         required: true,
+    //     },
+    // },    
+
+    components: {
+        Head,
+        Link,
+        InputField,
+        AuthenticatedLayout,
+        LoadingButton,
+        SelectInput,
+        TextInput,
+    },
+    remember: 'form',
+
+    data() {
+        return {
+            form: this.$inertia.form({
+                name: null,
+                price: null,
+                description: null,
+                barcode: null,  
+                quantity: null,
+                restockTime: null,
+                user_id: this.userId
+                
+            }),
+        }
+    },
+    methods: {
+        store() {
+            this.form.put('/api/products/store')
+        },
+    }  
+}
+</script>

@@ -8,6 +8,7 @@ use App\Domain\Product\Services\ProductService;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -31,7 +32,7 @@ class ProductController extends Controller
     public function create(CreateProductRequest $request)
     {
         Log::debug('create product form');
-        return Inertia::render('Products/Create');
+        return Inertia::render('Products/Create', ['userId' => Auth::id()]);
     }
 
     public function edit(EditProductRequest $request)
