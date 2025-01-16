@@ -146,7 +146,7 @@ export default {
     },
     methods: {
         store() {
-            this.form.put('/api/products/store')
+            this.form.put('/products/store')
         },
     }  
 }

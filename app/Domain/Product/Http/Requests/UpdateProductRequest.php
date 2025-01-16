@@ -34,7 +34,7 @@ class UpdateProductRequest extends FormRequest
             'name' => 'nullable|string',
             'description' => 'nullable|string',
             'price' => 'nullable|numeric',
-            'barcode' => 'nullable|string|unique:products,barcode',
+            //'barcode' => 'nullable|string|unique:products,barcode',
             'quantity' => 'nullable|integer',
             'restock_time' => 'nullable|integer',
         ];

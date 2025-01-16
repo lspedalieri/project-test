@@ -16,7 +16,6 @@ Route::group([
     'as' => 'products.',
     'middleware' => ['web'],
 ], function () {
-    
     Route::get('show', [ProductController::class, 'show'])->name('show');          //dettaglio del singolo prodotto
     Route::put('store', [ProductController::class, 'store'])->name('store');        //salvataggio del nuovo prodotto creato
     Route::post('update', [ProductController::class, 'update'])->name('update');    //aggiornamento di un prodotto

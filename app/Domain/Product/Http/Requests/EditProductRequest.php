@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Log;
 
 class EditProductRequest extends FormRequest
 {
@@ -18,7 +18,7 @@ class EditProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return (Auth::id() == $this->user_id && Auth::user()->roles == 'admin');
+        return Auth::user()->roles == 'admin';
     }
 
     /**
@@ -29,7 +29,6 @@ class EditProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id'   => 'required|exists:users,id',
             'id'        => 'required|exists:products,id',
         ];
     }

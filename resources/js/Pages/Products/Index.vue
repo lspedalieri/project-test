@@ -6,13 +6,17 @@ import { Head, Link, useForm } from '@inertiajs/vue3';
 
 defineProps({
   items: Object,
+  userId: {
+    type: Number,
+    default: null,        
+  }
 });
 
 const form = useForm({});
 
-const deletePost = (id) => {
+const deletePost = (id, userId) => {
   if (confirm("Are you sure you want to delete this item?")) {
-    form.delete(`/products/${id}`).then(() => {
+    form.delete(`/products/delete?id=${id}&user_id=${userId}`).then(() => {
       console.log('Deleted successfully');
     }).catch((error) => {
       console.error('Error deleting:', error);
@@ -54,10 +58,10 @@ const deletePost = (id) => {
                                   <td class="border px-4 py-2">{{ item.price }}</td>
                                   <td class="border px-4 py-2">{{ item.barcode }}</td>
                                   <td class="border px-4 py-2">{{ item.quantity }}</td>
-                                  <td class="border px-4 py-2">{{ item.restock_time }}</td>
+                                  <td class="border px-4 py-2">{{ item.restockTime }}</td>
                                   <td class="border px-4 py-2">
-                                    <Link :href="`products/${item.id}/edit`"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button></Link>
-                                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2" @click="deletePost(item.id)">Delete</button>
+                                    <Link :href="`products/edit?id=${item.id}`"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button></Link>
+                                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2" @click="deletePost(item.id, userId)">Delete</button>
                                   </td>
                                 </tr>
                             </tbody>

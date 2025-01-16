@@ -34,7 +34,11 @@ Route::group([
 ], function () {
     Route::get('', [ProductController::class, 'index'])->name('index');             //lista di tutti i prodotti
     Route::get('create', [ProductController::class, 'create'])->name('create');     //form di creazione di un prodotto
-    Route::get('edit', [ProductController::class, 'update'])->name('edit');         //form di modifica di un prodotto
+    Route::put('store', [ProductController::class, 'store'])->name('store');        //salvataggio del nuovo prodotto creato
+    Route::get('edit', [ProductController::class, 'edit'])->name('edit');           //form di modifica di un prodotto
+    Route::post('update', [ProductController::class, 'update'])->name('update');    //aggiornamento di un prodotto
+    Route::delete('delete', [ProductController::class, 'destroy'])->name('delete'); //cancellazione di un prodotto
+    Route::get('find', [ProductController::class, 'find'])->name('find');           //ricerca di prodotti    
 });
 
 require __DIR__.'/auth.php';
