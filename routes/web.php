@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -39,6 +40,21 @@ Route::group([
     Route::post('update', [ProductController::class, 'update'])->name('update');    //aggiornamento di un prodotto
     Route::delete('delete', [ProductController::class, 'destroy'])->name('delete'); //cancellazione di un prodotto
     Route::get('find', [ProductController::class, 'find'])->name('find');           //ricerca di prodotti    
+});
+
+Route::group([
+    'prefix' => 'orders',
+    'as' => 'orders.',
+    'middleware' => ['web'],
+], function () {
+    Route::get('', [OrderController::class, 'index'])->name('index');             //lista di tutti i prodotti
+    Route::get('create', [OrderController::class, 'create'])->name('create');     //form di creazione di un prodotto
+    Route::put('store', [OrderController::class, 'store'])->name('store');        //salvataggio del nuovo prodotto creato
+    Route::get('edit', [OrderController::class, 'edit'])->name('edit');           //form di modifica di un prodotto
+    Route::post('update', [OrderController::class, 'update'])->name('update');    //aggiornamento di un prodotto
+    Route::delete('delete', [OrderController::class, 'destroy'])->name('delete'); //cancellazione di un prodotto
+    Route::get('find', [OrderController::class, 'find'])->name('find');           //ricerca di prodotti    
+    Route::post('buy', [OrderController::class, 'buy'])->name('buy');           //ricerca di prodotti    
 });
 
 require __DIR__.'/auth.php';

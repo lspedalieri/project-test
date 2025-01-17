@@ -44,6 +44,11 @@ const showingNavigationDropdown = ref(false);
                                     :active="route().current('products.index')">
                                     Products
                                 </NavLink>
+                                <NavLink 
+                                    :href="route('orders.index')" 
+                                    :active="route().current('orders.index')">
+                                    Orders
+                                </NavLink>                                
                             </div>
                         </div>
 
@@ -201,3 +206,15 @@ const showingNavigationDropdown = ref(false);
         </div>
     </div>
 </template>
+<script>
+export default {
+  data() {
+        return {
+          user:this.user
+        }
+      },
+  mounted() {
+    this.user = this.$page.props.auth.user;
+  }
+}
+</script>

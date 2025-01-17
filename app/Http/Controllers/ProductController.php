@@ -22,10 +22,10 @@ class ProductController extends Controller
         $this->service = $service;
     }
 
-    public function index()
+    public function index(string $sortBy="created_at", string $order="asc")
     {
         Log::debug('product index');
-        $items = $this->service->getAllProducts();
+        $items = $this->service->getAllProducts($sortBy, $order);
 
         Log::debug('items', [$items]);
         return Inertia::render('Products/Index', ['items' => $items, 'userId' => Auth::id()]);

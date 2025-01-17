@@ -2,6 +2,9 @@
 
 namespace App\Domain\Product\Entities;
 
+use Carbon\CarbonInterface;
+use DateTime;
+
 class ProductEntity
 {
 

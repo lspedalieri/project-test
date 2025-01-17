@@ -1,7 +1,10 @@
 <?php
-namespace App\Domains\Orders\Services;
+namespace App\Domain\Order\Services;
 
-use App\Domains\Orders\Repositories\OrderRepository;
+use App\Domain\Order\Entities\OrderEntity;
+use App\Domain\Order\Enums\OrderStatus;
+use App\Domain\Order\Repositories\OrderRepository;
+use Illuminate\Support\Facades\Auth;
 
 class OrderService
 {
@@ -12,36 +15,52 @@ class OrderService
         $this->repository = $repository;
     }
 
-    public function createOrder(array $data)
+    public function createOrder(array $data) : OrderEntity
     {
-        return $this->repository->create($data);
+        return $this->repository->create(
+            $data["user"],
+            $data["product"],
+            $data["notes"] ?? null,
+            OrderStatus::STATUS_ORDERED
+        );
     }
 
-    public function updateOrder(int $id, array $data)
+    public function updateOrder(array $data, $user_id)
     {
-        $order = $this->repository->find($id);
+        $order = $this->repository->find($data['id'], $user_id);
         if (!$order) {
             throw new \Exception("Order not found");
         }
         return $this->repository->update($order, $data);
     }
 
-    public function deleteOrder(int $id)
+    public function deleteOrder(int $id, $user_id)
     {
-        $order = $this->repository->find($id);
+        $order = $this->repository->find($id, $user_id);
         if (!$order) {
             throw new \Exception("Order not found");
         }
-        $this->repository->delete($order);
+        $this->repository->delete($id, $user_id);
     }
 
-    public function getOrder(int $id)
+
+    public function getOrdersByFilter(array $data): array
     {
-        return $this->repository->find($id);
+        return $this->repository->getOrdersByFilter(
+            user_id: $data["user_id"],
+            product: $data["product"] ?? null,
+            notes: $data["notes"] ?? null,
+            status: $data["status"] ?? null
+        );        
     }
 
-    public function getAllOrders()
+    public function getOrder(int $id, $user_id)
     {
-        return $this->repository->all();
+        return $this->repository->find($id, $user_id);
+    }
+
+    public function getUserOrders($user_id)
+    {
+        return $this->repository->findUserOrders($user_id);
     }
 }

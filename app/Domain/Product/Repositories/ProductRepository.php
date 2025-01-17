@@ -8,6 +8,7 @@ use App\Domain\Product\Factories\ProductFactory;
 use App\Domain\Product\Product as ProductModel;
 use Illuminate\Database\Eloquent\Builder;
 use Carbon\CarbonInterface;
+use DateTime;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
@@ -33,8 +34,9 @@ class ProductRepository
                 'price' => $price,
                 'quantity' => $quantity,
                 'barcode' => $barcode,
-                'restock_time' => $restockTime,
+                'restock_time' => $restockTime
             ]);
+            Log::debug('product entity', [$product]);
         }catch(Exception $e){
             DB::rollBack();
             throw new Exception(
@@ -117,9 +119,9 @@ class ProductRepository
         ;
     }
 
-    public function all()
+    public function all(string $sortBy="created_at", string $order="asc")
     {
-        return ProductModel::all()
+        return ProductModel::orderBy($sortBy, $order)->get()
         ->map(fn (ProductModel $product) => ProductFactory::fromModel($product))
         //->toArray()
         ;

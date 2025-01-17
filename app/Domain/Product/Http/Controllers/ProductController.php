@@ -38,7 +38,6 @@ class ProductController extends Controller
 
     public function update(UpdateProductRequest $request)
     {
-        $request->except('user_id');
         return response()->json($this->service->updateProduct($request->except(['user_id', '_token'])), 201);
     }
 

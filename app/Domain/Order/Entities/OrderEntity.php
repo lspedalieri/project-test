@@ -1,29 +1,19 @@
 <?php
-namespace App\Domains\Orders\Entities;
+namespace App\Domain\Order\Entities;
 
 use App\Domain\Product\Entities\ProductEntity;
+use App\Domain\Order\Enums\OrderStatus;
+use App\Models\User;
 
 class OrderEntity
 {
-    private int $id;
-    private int $userId;
-    private ProductEntity $product;
-    private string $notes;
-    private string $status;
-
     public function __construct(
-        int $id,
-        int $userId,
-        ProductEntity $product,
-        string $notes,
-        string $status
-    ) {
-        $this->id = $id;
-        $this->userId = $userId;
-        $this->product = $product;
-        $this->notes = $notes;
-        $this->status = $status;
-    }
+        public int $id,
+        public User $user,
+        public ProductEntity $product,
+        public string $notes,
+        public OrderStatus $status
+    ) {}
 
     // Getter per le proprietà
     public function getId(): int
@@ -33,7 +23,7 @@ class OrderEntity
 
     public function getUserId(): int
     {
-        return $this->userId;
+        return $this->user->id;
     }
 
     public function getProduct(): ProductEntity
@@ -46,7 +36,7 @@ class OrderEntity
         return $this->notes;
     }
 
-    public function getStatus(): string
+    public function getStatus(): OrderStatus
     {
         return $this->status;
     }

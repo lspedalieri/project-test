@@ -20,7 +20,6 @@ class ProductService
 
     public function createProduct(array $data) : ProductEntity
     {
-        Log::debug('Service create product',);
         return $this->repository->create(
             $data["name"],
             $data["description"] ?? null,
@@ -37,7 +36,8 @@ class ProductService
         return $this->repository->getProductById($id);
     }
 
-    public function getProductsByFilter(array $data): array {
+    public function getProductsByFilter(array $data): array 
+    {
         Log::debug('get products by filter');
         return $this->repository->getProductsByFilter(
             name: $data['name'] ?? null,
@@ -74,9 +74,9 @@ class ProductService
         return $this->repository->find($id);
     }
 
-    public function getAllProducts()
+    public function getAllProducts(string $sortBy="created_at", string $order="asc")
     {
-        return $this->repository->all();
+        return $this->repository->all($sortBy, $order);
     }
 
     // public function getProductEntity(int $id): ?ProductEntity
