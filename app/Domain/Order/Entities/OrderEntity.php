@@ -4,15 +4,18 @@ namespace App\Domain\Order\Entities;
 use App\Domain\Product\Entities\ProductEntity;
 use App\Domain\Order\Enums\OrderStatus;
 use App\Models\User;
+use App\Entities\UserEntity;
 
 class OrderEntity
 {
     public function __construct(
         public int $id,
-        public User $user,
+        public UserEntity $user,
         public ProductEntity $product,
         public string $notes,
-        public OrderStatus $status
+        public OrderStatus $status,
+        public int $quantity,
+        public float $cost
     ) {}
 
     // Getter per le proprietà

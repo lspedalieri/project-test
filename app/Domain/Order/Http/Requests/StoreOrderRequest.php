@@ -10,7 +10,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
-
+use Illuminate\Validation\Rule;
 
 class StoreOrderRequest extends FormRequest
 {
@@ -19,7 +19,7 @@ class StoreOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        Log::debug('store product');
+        Log::debug('create order buy');
         return Auth::id();
     }
 
@@ -30,19 +30,27 @@ class StoreOrderRequest extends FormRequest
      */
     public function rules(): array
     {
+        $quantity = $this->quantity;
         return [
             'user_id'   => 'required|exists:users,id',
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric',
-            'barcode' => 'required|string|unique:products,barcode',
-            'quantity' => 'required|integer',
-            'restock_time' => 'nullable|integer',
+            'product_id'=> 'required|string|exists:products,id',
+            'quantity'  => [
+                'required', 
+                'integer', 
+                'min:1', 
+            Rule::exists('products', 'id')->where(function ($q) use ($quantity) {
+                $q->where('quantity','>', $quantity);
+            })]
         ];
     }
 
     public function messages(){
-        return [];
+        return [
+            'quantity.exists'   => 'Quantity not available',
+            'quantity.required' => 'must be more than zero',
+            'quantity.min'      => 'At least a product',
+            'quantity.integer'  => 'Quantity must be an integer number',
+        ];
     }
 
     protected function failedValidation(Validator $validator)

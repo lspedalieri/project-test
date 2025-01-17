@@ -20,13 +20,14 @@ class ProductService
 
     public function createProduct(array $data) : ProductEntity
     {
+        Log::debug('get products by filter', $data);
         return $this->repository->create(
             $data["name"],
             $data["description"] ?? null,
             $data["price"],
             $data["quantity"] ?? null,
             $data["barcode"],
-            $data["restock_time"] ?? null,
+            $data["restockTime"] ?? null,
         );
     }
 

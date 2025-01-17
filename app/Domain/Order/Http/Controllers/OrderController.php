@@ -35,6 +35,8 @@ class OrderController extends Controller
     public function store(StoreOrderRequest $request)
     {
         Log::debug('Store orders', [$request->all()]);
+        
+        if($request->quantity)
         return response()->json($this->service->createOrder($request->all()), 201);
     }
 

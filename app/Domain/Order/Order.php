@@ -21,16 +21,13 @@ class Order extends Model
 
     protected $guarded = [];
 
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime'
-    ];
-
     protected $fillable = [
         'product_id',
         'user_id',
         'notes',
         'status',
+        'quantity',
+        'cost'
     ];
 
     public const STATUS_SENT = 'sent';

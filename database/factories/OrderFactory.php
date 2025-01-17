@@ -16,8 +16,10 @@ class OrderFactory extends Factory
         return [
             'product_id' => Product::factory(), // Associa a un prodotto generato
             'user_id' => User::factory(), // Associa a un utente generato
-            'notes' => $this->faker->sentence(), // Note casuali
-            'status' => $this->faker->randomElement(['inviato', 'cancellato', 'ordinato']), // Stato casuale
+            'notes' => fake()->sentence(), // Note casuali
+            'status' => fake()->randomElement(['inviato', 'cancellato', 'ordinato']), // Stato casuale
+            'quantity' => fake()->randomNumber(3, false),
+            'cost' => fake()->randomFloat(2, 10, 100),
         ];
     }
 }

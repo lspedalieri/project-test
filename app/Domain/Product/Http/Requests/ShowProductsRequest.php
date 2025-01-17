@@ -8,6 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 
@@ -18,7 +19,9 @@ class ShowProductsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return (Auth::id() == $this->user_id && Auth::user()->roles == 'admin');    }
+        Log::debug('show products api request', [$this->all()]);
+        return Auth::id() == $this->user_id;
+    }
 
     /**
      * Get the validation rules that apply to the request.

@@ -18,7 +18,9 @@ class OrderRepository
         User $user,
         ProductEntity $product,
         ?string $notes,
-        OrderStatus $status
+        OrderStatus $status,
+        int $quantity,
+        float $cost
     ): OrderEntity
     {
         DB::beginTransaction();
@@ -28,7 +30,9 @@ class OrderRepository
                 'user_id' => $user->id,
                 'product_id' => $product->product_id,
                 'notes' => $notes,
-                'status' => $status
+                'status' => $status,
+                'quantity' => $quantity,
+                'cost'  => $cost
             ]);
         }catch(Exception $e){
             DB::rollBack();

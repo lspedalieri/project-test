@@ -20,6 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->comment('Buyer ID related to user table');
             $table->text('notes')->nullable()->comment('user notes about order');
             $table->enum('status', $this->statuses)->comment('status list');
+            $table->unsignedInteger('quantity')->comment('Quantity of product bought in the order');
+            $table->float('cost')->comment('Product cost in the order');
             $table->timestamps();
             $table->softDeletes();
         });
