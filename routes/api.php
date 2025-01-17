@@ -2,6 +2,7 @@
 
 use App\Domain\Product\Http\Controllers\ProductController;
 use App\Domain\Order\Http\Controllers\OrderController;
+use App\Http\Controllers\API\Auth\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -12,7 +13,7 @@ Route::get('/user', function (Request $request) {
 Route::group([
     'prefix' => 'auth',
     'as' => 'auth.',
-    'middleware' => ['web'],
+    'middleware' => [],
 ], function () {
     Route::post('login', [LoginController::class, '__invoke'])->name('login');
 });
@@ -21,7 +22,7 @@ Route::group([
 Route::group([
     'prefix' => 'products',
     'as' => 'products.',
-    'middleware' => ['web'],
+    'middleware' => ['auth:sanctum'],
 ], function () {
     Route::get('index', [ProductController::class, 'index'])->name('index');          //mostra tutti i prodotti
     Route::get('show', [ProductController::class, 'show'])->name('show');           //dettaglio del singolo prodotto
@@ -35,7 +36,7 @@ Route::group([
 Route::group([
     'prefix' => 'orders',
     'as' => 'orders.',
-    'middleware' => ['web'],
+    'middleware' => ['auth:sanctum'],
 ], function () {
     Route::get('orders', [OrderController::class, 'index'])->name('orders');
     Route::get('order', [OrderController::class, 'index'])->name('show');

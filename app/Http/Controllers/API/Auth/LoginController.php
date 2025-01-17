@@ -38,19 +38,6 @@ class LoginController extends Controller
             ], Response::HTTP_UNAUTHORIZED);
         }
 
-        if ($user->status != 'active') {
-            return response()->json([
-                'message' => 'User not active',
-                'status' => 'error',
-            ], Response::HTTP_UNAUTHORIZED);
-        }
-
-        if ($logUser->timezone) {
-            $user->timezone = $logUser->timezone;
-            $user->save();
-        }
-
-
         $token = $user->createToken(self::TOKEN_NAME);
 
         return response()->json([
