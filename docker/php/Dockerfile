@@ -15,6 +15,11 @@ FROM php:8.2-fpm AS base
 # Set working directory
 WORKDIR /var/www
 
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
+    install-php-extensions mbstring pdo_mysql zip exif pcntl gd bcmath
+
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -49,7 +54,7 @@ RUN docker-php-ext-install gd
 #     n latest
 
 
-ENV NODE_VERSION=16.13.0
+ENV NODE_VERSION=20.18.1
 RUN apt install -y curl
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 ENV NVM_DIR=/root/.nvm

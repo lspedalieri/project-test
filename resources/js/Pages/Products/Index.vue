@@ -1,8 +1,11 @@
 <script setup>
-import Pagination from '@/Components/Pagination.vue';
+//import Pagination from '@/Components/Pagination.vue';
+//import Pagination from '@/Shared/Pagination.vue';
 //import PaginationBar from '@/Components/PaginationBar.vue';
+import SearchFilter from '@/Shared/SearchFilter.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm, router } from '@inertiajs/vue3';
+import { onMounted, ref, watch } from 'vue';
 
 defineProps({
   items: Object,
@@ -11,6 +14,10 @@ defineProps({
     default: null,        
   }
 });
+// onMounted(() => {
+//   console.log(`the component is now mounted.`)
+//   console.log(items);
+// })
 
 const form = useForm({});
 
@@ -31,14 +38,21 @@ const orderItem = (item, userId) => {
     return;
   }
   if (confirm("Are you sure you want to buy " + quantity + " " + item.name + "?")) {
-    form.put(`/orders/buy?product_id=${item.id}&user_id=${userId}&quantity=${quantity}`).then(() => {
+    form.put(`/orders/buy?product_id=${item.id}&user_id=${userId}&quantity=${quantity}`).then((response) => {
       console.log('Ordered successfully');
     }).catch((error) => {
       console.error('Error buy:', error);
     });
-  }
+  }  
 };
 
+// const searchField = ref(''); //Should really load it from the query string
+
+// const url = route('products.index');
+
+// watch(searchField, debounce(() => {
+// 	router.get(url, {searchField: searchField.value}, {preserveState: true, preserveScroll: true, only: ['items']})
+// }, 300));
 </script>
 
 <template>
@@ -59,6 +73,10 @@ const orderItem = (item, userId) => {
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <Link v-if="$page.props.auth.user.roles=='admin'" href="products/create"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Create New Product</button></Link>
+                        <!-- <input type="search" v-model="searchField" > -->
+                        <div v-if="$page.props.flash.message" class="alert">
+                          {{ $page.props.flash.message }}
+                        </div>
                         <table class="table-auto w-full">
                             <thead>
                               <tr>
@@ -97,10 +115,10 @@ const orderItem = (item, userId) => {
                     </div>
                 </div>
                  <!-- Pagination Start-->
-                 <!-- <div class="mt-6">
-                        <Pagination :links="items.links" />
-                  </div> -->
-                <!-- Pagination End-->
+                 <div class="mt-6">
+                    <!-- <pagination :links="items.links" /> -->
+                  </div> 
+                <!-- Pagination End -->
             </div>
         </div>
     </AuthenticatedLayout>

@@ -119,9 +119,9 @@ class ProductRepository
         ;
     }
 
-    public function all(string $sortBy="created_at", string $order="asc")
+    public function all(string $sortBy="id", string $order="asc", int $pagination = 10)
     {
-        return ProductModel::orderBy($sortBy, $order)->get()
+        return ProductModel::orderBy($sortBy, $order)->get()   //->paginate($pagination);
         ->map(fn (ProductModel $product) => ProductFactory::fromModel($product))
         //->toArray()
         ;

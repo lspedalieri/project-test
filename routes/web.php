@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
 Route::group([
     'prefix' => 'products',
     'as' => 'products.',
-    'middleware' => ['web'],
+    'middleware' => ['web', 'auth', 'verified'],
 ], function () {
     Route::get('', [ProductController::class, 'index'])->name('index');             //lista di tutti i prodotti
     Route::get('create', [ProductController::class, 'create'])->name('create');     //form di creazione di un prodotto
@@ -45,7 +45,7 @@ Route::group([
 Route::group([
     'prefix' => 'orders',
     'as' => 'orders.',
-    'middleware' => ['web'],
+    'middleware' => ['web', 'auth', 'verified'],
 ], function () {
     Route::get('', [OrderController::class, 'index'])->name('index');             //lista di tutti i prodotti
     Route::get('create', [OrderController::class, 'create'])->name('create');     //form di creazione di un ordine

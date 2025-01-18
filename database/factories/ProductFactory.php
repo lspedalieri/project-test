@@ -19,7 +19,7 @@ class ProductFactory extends Factory
     {
         return [
             'name' => fake()->word(),
-            'description' => fake()->paragraph(),
+            'description' => fake()->paragraph(1),
             'price' => fake()->randomFloat(2, 10, 100),
             'quantity' => fake()->randomNumber(3, false),
             'barcode' => fake()->isbn10(),

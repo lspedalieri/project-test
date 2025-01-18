@@ -75,9 +75,9 @@ class ProductService
         return $this->repository->find($id);
     }
 
-    public function getAllProducts(string $sortBy="created_at", string $order="asc")
+    public function getAllProducts(string $sortBy="id", string $order="asc", int $pagination = 10)
     {
-        return $this->repository->all($sortBy, $order);
+        return $this->repository->all($sortBy, $order, $pagination);
     }
 
     // public function getProductEntity(int $id): ?ProductEntity

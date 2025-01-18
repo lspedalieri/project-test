@@ -27,7 +27,11 @@
   php artisan key:generate
   ```
 
-- After running this command, the project code should appear in the src folder.
+- kill any web services on port 80 and 3306 on the host machine because can interfere with docker services.
+
+  ```
+  sudo service apache2 stop
+  ```
 
 - Start docker containers
 
@@ -43,6 +47,14 @@
 
 #### 3. Configure Laravel project 
  
+
+- Copy .env.example file in .env
+
+  ```
+  cp .env.example .env
+  ```
+
+- Check DB credentials
   ```
   DB_CONNECTION=mysql       # connection name, we use mysql
   DB_HOST=mysql             # name of mysql service in docker-compose.yml
@@ -74,9 +86,19 @@
   ```
 
 #### 5. Run Migrations
+- Run migration and seeder from the host machine shell
 
   ```
   docker compose run --rm artisan migrate
+  docker compose run --rm artisan db:seed DatabaseSeeder
+  ```
+
+- Or enter in docker shell first
+  
+  ```
+  docker compose exec app bash
+  php artisan migrate
+  php artisan db:seed DatabaseSeeder
   ```
 
 #### Some useful commands
