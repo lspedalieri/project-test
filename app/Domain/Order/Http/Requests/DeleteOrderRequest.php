@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class DeleteOrderRequest extends FormRequest
 {
@@ -17,7 +18,7 @@ class DeleteOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::id();
+        return Auth::id() == $this->user_id;
     }
 
     /**
@@ -29,12 +30,17 @@ class DeleteOrderRequest extends FormRequest
     {
         return [
             'user_id'   => 'required|exists:users,id',
-            'id'    => 'required|exists:products,id',
+            'id'    => [
+                'required',
+                Rule::exists('orders','id')->where('user_id', $this->user_id)
+            ],
         ];
     }
 
     public function messages(){
-        return [];
+        return [
+            'id.exists' => 'wrong user for the order',
+        ];
     }
 
     protected function failedValidation(Validator $validator)

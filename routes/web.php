@@ -48,13 +48,12 @@ Route::group([
     'middleware' => ['web'],
 ], function () {
     Route::get('', [OrderController::class, 'index'])->name('index');             //lista di tutti i prodotti
-    Route::get('create', [OrderController::class, 'create'])->name('create');     //form di creazione di un prodotto
-    Route::put('store', [OrderController::class, 'store'])->name('store');        //salvataggio del nuovo prodotto creato
-    Route::get('edit', [OrderController::class, 'edit'])->name('edit');           //form di modifica di un prodotto
-    Route::post('update', [OrderController::class, 'update'])->name('update');    //aggiornamento di un prodotto
-    Route::delete('delete', [OrderController::class, 'destroy'])->name('delete'); //cancellazione di un prodotto
-    Route::get('find', [OrderController::class, 'find'])->name('find');           //ricerca di prodotti    
-    Route::post('buy', [OrderController::class, 'buy'])->name('buy');           //ricerca di prodotti    
+    Route::get('create', [OrderController::class, 'create'])->name('create');     //form di creazione di un ordine
+    Route::put('buy', [OrderController::class, 'store'])->name('store');          //Creazione di un ordine
+    Route::get('edit', [OrderController::class, 'edit'])->name('edit');           //form di modifica di un ordine
+    Route::post('update', [OrderController::class, 'update'])->name('update');    //aggiornamento di un ordine
+    Route::delete('delete', [OrderController::class, 'destroy'])->name('delete'); //cancellazione di un ordine
+    Route::get('find', [OrderController::class, 'find'])->name('find');           //ricerca di ordini
 });
 
 require __DIR__.'/auth.php';

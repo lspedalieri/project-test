@@ -10,7 +10,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
-
+use Illuminate\Validation\Rule;
 
 class ShowOrderRequest extends FormRequest
 {
@@ -19,7 +19,7 @@ class ShowOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::id();
+        return Auth::id() == $this->user_id;
     }
 
     /**
@@ -31,7 +31,10 @@ class ShowOrderRequest extends FormRequest
     {
         return [
             'user_id'   => 'required|exists:users,id',
-            'id'        => 'required|exists:products,id',
+            'id'    => [
+                'required',
+                Rule::exists('orders','id')->where('user_id', $this->user_id)
+            ],
         ];
     }
 

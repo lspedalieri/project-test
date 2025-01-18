@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Factories;
 
-use App\Domain\Users\Entities\User;
+use App\Entities\UserEntity;
 use App\Models\User as UserModel;
 
 class UserFactory
 {
-    public static function fromModel(UserModel $user): User
+    public static function fromModel(UserModel $user): UserEntity
     {
-        return new User(
+        return new UserEntity(
             $user->id,
             $user->email,
             $user->name,

@@ -4,6 +4,7 @@ namespace App\Domain\Order\Factories;
 
 use App\Domain\Order\Order;
 use App\Domain\Order\Entities\OrderEntity;
+use App\Domain\Order\Enums\OrderStatus;
 use App\Domain\Product\Entities\ProductEntity;
 use App\Domain\Product\Factories\ProductFactory;
 use App\Domain\Product\Product;
@@ -19,15 +20,19 @@ class OrderFactory
 {
     //private $statuses = [Order::STATUS_SENT, Order::STATUS_CANCELED, Order::STATUS_ORDERED];
 
-    public static function fromModel(Order $order, User $userModel, Product $productModel): OrderEntity
+    public static function fromModel(Order $order): OrderEntity
     {
-           
-        $product = ProductFactory::fromModel($productModel);
-        $user = UserFactory::fromModel($userModel);
+        Log::debug('order model', [$order->status, $order, $order->product()->first(), $order->user()->first()]);
+        $product = ProductFactory::fromModel($order->product()->first());
+        $user = UserFactory::fromModel($order->user()->first()  );
+
+        // $productId = $order->product_id;  
+        // $userId = $order->user_id;        
         $notes = $order->notes;
-        $status = $order->status;
-        $quantity = $order->cost;
+        $quantity = $order->quantity;
         $cost = $order->cost;
+        $status = $order->status;
+        //$status = OrderStatus::from($status);
 
         Log::debug('order from model', [$order]);
         return new OrderEntity(

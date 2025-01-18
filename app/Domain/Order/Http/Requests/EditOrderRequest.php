@@ -10,6 +10,7 @@ use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 class EditOrderRequest extends FormRequest
 {
@@ -18,7 +19,7 @@ class EditOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::id();
+        return Auth::id() == $this->user_id;
     }
 
     /**
@@ -29,7 +30,10 @@ class EditOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id'        => 'required|exists:products,id',
+            'id'    => [
+                'required',
+                Rule::exists('orders','id')->where('user_id', $this->user_id)
+            ],
         ];
     }
 

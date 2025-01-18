@@ -3,7 +3,9 @@
 namespace App\Domain\Order\Http\Requests;
 
 use App\Domain\Order\Exceptions\NotAuthorizedException;
+use App\Domain\Product\Product;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -19,8 +21,7 @@ class StoreOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        Log::debug('create order buy');
-        return Auth::id();
+        return Auth::id() == $this->user_id;
     }
 
     /**
@@ -30,17 +31,16 @@ class StoreOrderRequest extends FormRequest
      */
     public function rules(): array
     {
-        $quantity = $this->quantity;
+        $max_quantity = Product::where('id', $this->product_id)->first()->quantity;
         return [
             'user_id'   => 'required|exists:users,id',
-            'product_id'=> 'required|string|exists:products,id',
+            'product_id'=> 'required|integer|exists:products,id',
             'quantity'  => [
                 'required', 
                 'integer', 
-                'min:1', 
-            Rule::exists('products', 'id')->where(function ($q) use ($quantity) {
-                $q->where('quantity','>', $quantity);
-            })]
+                'min:1',
+                "max:$max_quantity"
+            ]
         ];
     }
 
@@ -48,7 +48,7 @@ class StoreOrderRequest extends FormRequest
         return [
             'quantity.exists'   => 'Quantity not available',
             'quantity.required' => 'must be more than zero',
-            'quantity.min'      => 'At least a product',
+            'quantity.min'      => 'Select a product',
             'quantity.integer'  => 'Quantity must be an integer number',
         ];
     }

@@ -18,7 +18,7 @@ class CreateOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::id();
+        return Auth::id() == $this->user_id;
     }
 
     /**

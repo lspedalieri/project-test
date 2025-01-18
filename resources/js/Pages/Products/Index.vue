@@ -27,11 +27,11 @@ const deleteItem = (item, userId) => {
 const orderItem = (item, userId) => {
   let quantity = document.getElementById("quantity-"+item.id).value;
   if(quantity < 1) {
-    alert("at least 1 product");
+    alert("Select 1 product");
     return;
   }
   if (confirm("Are you sure you want to buy " + quantity + " " + item.name + "?")) {
-    form.post(`/orders/buy?id=${item.id}&user_id=${userId}`).then(() => {
+    form.put(`/orders/buy?product_id=${item.id}&user_id=${userId}&quantity=${quantity}`).then(() => {
       console.log('Ordered successfully');
     }).catch((error) => {
       console.error('Error buy:', error);
@@ -62,7 +62,7 @@ const orderItem = (item, userId) => {
                         <table class="table-auto w-full">
                             <thead>
                               <tr>
-                                <th class="border px-4 py-2">ID</th>
+                                <th v-if="$page.props.auth.user.roles=='admin'" class="border px-4 py-2">ID</th>
                                 <th class="border px-4 py-2">Name</th>
                                 <th class="border px-4 py-2">Description</th>
                                 <th class="border px-4 py-2">Price</th>
@@ -75,7 +75,7 @@ const orderItem = (item, userId) => {
                               </thead>
                               <tbody>
                                 <tr v-for="item in items" :key="item.id">
-                                  <td class="border px-4 py-2">{{ item.id }}</td>
+                                  <td v-if="$page.props.auth.user.roles=='admin'" class="border px-4 py-2">{{ item.id }}</td>
                                   <td class="border px-4 py-2">{{ item.name }}</td>
                                   <td class="border px-4 py-2">{{ item.description }}</td>
                                   <td class="border px-4 py-2">{{ item.price }}</td>

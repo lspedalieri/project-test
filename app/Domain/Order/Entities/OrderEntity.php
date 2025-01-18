@@ -12,8 +12,8 @@ class OrderEntity
         public int $id,
         public UserEntity $user,
         public ProductEntity $product,
-        public string $notes,
-        public OrderStatus $status,
+        public ?string $notes,
+        public string $status,
         public int $quantity,
         public float $cost
     ) {}
@@ -24,9 +24,9 @@ class OrderEntity
         return $this->id;
     }
 
-    public function getUserId(): int
+    public function getUser(): UserEntity
     {
-        return $this->user->id;
+        return $this->user;
     }
 
     public function getProduct(): ProductEntity
@@ -44,16 +44,15 @@ class OrderEntity
         return $this->status;
     }
 
-    // Logica di dominio (esempio)
     public function canBeCanceled(): bool
     {
-        return $this->status !== 'cancellato';
+        return $this->status !== 'canceled';
     }
 
     public function markAsSent(): void
     {
-        if ($this->status === 'ordinato') {
-            $this->status = 'inviato';
+        if ($this->status === 'ordered') {
+            $this->status = 'sent';
         }
     }
 }

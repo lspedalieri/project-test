@@ -17,7 +17,8 @@ class DeleteProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return (Auth::id() == $this->user_id && Auth::user()->roles == 'admin');    }
+        return (Auth::id() == $this->user_id && Auth::user()->roles == 'admin');
+    }
 
     /**
      * Get the validation rules that apply to the request.

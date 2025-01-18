@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Order\Enums\OrderStatus;
 use App\Domain\Order\Http\Requests\CreateOrderRequest;
 use App\Domain\Order\Http\Requests\EditOrderRequest;
 use App\Domain\Order\Http\Requests\StoreOrderRequest;
 use App\Domain\Order\Http\Requests\UpdateOrderRequest;
 use App\Domain\Order\Services\OrderService;
+use App\Domain\Product\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
@@ -25,7 +28,7 @@ class OrderController extends Controller
     public function index()
     {
         Log::debug('order index');
-        $items = $this->service->getAllOrders();
+        $items = $this->service->getUserOrders(Auth::id());
 
         Log::debug('items', [$items]);
         return Inertia::render('Orders/Index', ['items' => $items, 'userId' => Auth::id()]);
@@ -39,8 +42,11 @@ class OrderController extends Controller
 
     public function store(StoreOrderRequest $request)
     {
-        $this->service->createOrder($request->all());
-        return redirect(route('orders.index'));
+        $product = Product::findOrFail($request->product_id);
+        $user = User::findOrFail(Auth::id());
+        $request->merge(['product' => $product, 'user' => $user, 'cost' => $product->price * $request->quantity]);
+        $order = $this->service->createOrder($request->all());
+        return redirect(route('products.index'));
     }
 
     public function edit(EditOrderRequest $request)
@@ -60,7 +66,7 @@ class OrderController extends Controller
     public function destroy(UpdateOrderRequest $request)
     {
         $request->except('user_id');
-        $this->service->deleteOrder($request->id);
+        $this->service->deleteOrder($request->id, Auth::id());
         return redirect(route('orders.index'));
     }    
 

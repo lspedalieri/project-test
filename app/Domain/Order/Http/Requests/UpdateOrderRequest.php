@@ -8,6 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 
@@ -18,7 +19,7 @@ class UpdateOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::id();
+        return Auth::id() == $this->user_id;
     }
 
     /**
@@ -30,7 +31,10 @@ class UpdateOrderRequest extends FormRequest
     {
         return [
             'user_id'   => 'required|exists:users,id',
-            'id'    => 'required|exists:orders,id',
+            'id'    => [
+                'required',
+                Rule::exists('orders','id')->where('user_id', $this->user_id)
+            ],
             'notes' => 'nullable|string',
         ];
     }
