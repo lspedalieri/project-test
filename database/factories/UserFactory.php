@@ -14,6 +14,9 @@ class UserFactory extends Factory
     /**
      * The current password being used by the factory.
      */
+    protected static ?string $name;
+    protected static ?string $email;
+    protected static ?string $role;
     protected static ?string $password;
 
     /**
@@ -24,22 +27,12 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            [
-                'name' => 'admin',
-                'email' => fake()->unique()->safeEmail(),
-                'email_verified_at' => now(),
-                'roles' => 'admin',
-                'password' => static::$password ??= Hash::make('password'),
-                'remember_token' => Str::random(10),
-            ],
-            [
-                'name' => 'user',
-                'email' => fake()->unique()->safeEmail(),
-                'email_verified_at' => now(),
-                'roles' => 'user',
-                'password' => static::$password ??= Hash::make('password'),
-                'remember_token' => Str::random(10),                
-            ]
+            'name' => static::$name ?? fake()->name(),
+            'email' => static::$email ?? fake()->unique()->safeEmail(),
+            'email_verified_at' => now(),
+            'roles' => static::$role ?? 'user',
+            'password' => static::$password ??= Hash::make('password'),
+            'remember_token' => Str::random(10),
         ];
     }
 
