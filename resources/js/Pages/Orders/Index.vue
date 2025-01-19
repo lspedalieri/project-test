@@ -1,6 +1,4 @@
 <script setup>
-import Pagination from '@/Components/Pagination.vue';
-//import PaginationBar from '@/Components/PaginationBar.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
@@ -23,6 +21,11 @@ const deleteItem = (id, userId) => {
     });
   }
 };
+
+$(document).ready(function () {
+    $('#order-table').DataTable();
+});
+
 </script>
 
 <template>
@@ -36,7 +39,7 @@ const deleteItem = (id, userId) => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
-                        <table class="table-auto w-full">
+                        <table id="order-table" class="table-auto w-full">
                             <thead>
                               <tr>
                                 <th class="border px-4 py-2">ID</th>
@@ -64,11 +67,6 @@ const deleteItem = (id, userId) => {
                         </table>
                     </div>
                 </div>
-                 <!-- Pagination Start-->
-                 <!-- <div class="mt-6">
-                        <Pagination :links="items.links" />
-                  </div> -->
-                <!-- Pagination End-->
             </div>
         </div>
     </AuthenticatedLayout>

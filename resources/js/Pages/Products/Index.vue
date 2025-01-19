@@ -1,11 +1,6 @@
 <script setup>
-//import Pagination from '@/Components/Pagination.vue';
-//import Pagination from '@/Shared/Pagination.vue';
-//import PaginationBar from '@/Components/PaginationBar.vue';
-import SearchFilter from '@/Shared/SearchFilter.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, useForm, router } from '@inertiajs/vue3';
-import { onMounted, ref, watch } from 'vue';
 
 defineProps({
   items: Object,
@@ -14,10 +9,6 @@ defineProps({
     default: null,        
   }
 });
-// onMounted(() => {
-//   console.log(`the component is now mounted.`)
-//   console.log(items);
-// })
 
 const form = useForm({});
 
@@ -46,13 +37,10 @@ const orderItem = (item, userId) => {
   }  
 };
 
-// const searchField = ref(''); //Should really load it from the query string
+$(document).ready(function () {
+    $('#product-table').DataTable();
+});
 
-// const url = route('products.index');
-
-// watch(searchField, debounce(() => {
-// 	router.get(url, {searchField: searchField.value}, {preserveState: true, preserveScroll: true, only: ['items']})
-// }, 300));
 </script>
 
 <template>
@@ -77,7 +65,7 @@ const orderItem = (item, userId) => {
                         <div v-if="$page.props.flash.message" class="alert">
                           {{ $page.props.flash.message }}
                         </div>
-                        <table class="table-auto w-full">
+                        <table id="product-table" class="table-auto w-full">
                             <thead>
                               <tr>
                                 <th v-if="$page.props.auth.user.roles=='admin'" class="border px-4 py-2">ID</th>
@@ -104,7 +92,7 @@ const orderItem = (item, userId) => {
                                     <Link :href="`products/edit?id=${item.id}`"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button></Link>
                                     <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2" @click="deleteItem(item, userId)">Delete</button>
                                   </td>
-                                  <td>
+                                  <td class="border px-4 py-2">
                                     <input type ="number" :id="'quantity-'+item.id" class="form-control font-bold py-2 px-4 rounded ml-2" min="0" :max="item.quantity"/>
                                     <button v-if="item.quantity > 0" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2" @click="orderItem(item, userId)">Buy</button>
                                     <span v-else>Not available</span>
