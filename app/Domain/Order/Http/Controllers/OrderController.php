@@ -24,9 +24,15 @@ class OrderController extends Controller
         $this->service = $service;
     }
 
-    public function show(ShowOrdersRequest $request)
+    public function index(ShowOrdersRequest $request)
     {
         return response()->json($this->service->getUserOrders(Auth::id()));
+    }
+
+
+    public function show(ShowOrderRequest $request)
+    {
+        return response()->json($this->service->getOrder($request->id, $request->user_id));
     }
 
     public function find(FindOrderRequest $request)
@@ -43,14 +49,14 @@ class OrderController extends Controller
         return response()->json($order, 201);
     }
 
-    // public function update(UpdateOrderRequest $request)
-    // {
-    //     return response()->json($this->service->updateOrder($request->except(['user_id', '_token']), Auth::id()), 201);
-    // }
+    public function update(UpdateOrderRequest $request)
+    {
+        return response()->json($this->service->updateOrder($request->except(['user_id', '_token']), Auth::id()), 201);
+    }
 
     public function destroy(DeleteOrderRequest $request)
     {
-        $this->service->deleteOrder($request->id, Auth::id());
+        $this->service->deleteOrder($request->id, $request->user_id);
         return response()->json(null, 204);
     }
 }

@@ -7,6 +7,7 @@ use App\Domain\Order\Entities\OrderEntity;
 use App\Domain\Order\Factories\OrderFactory;
 use App\Domain\Product\Entities\ProductEntity;
 use App\Domain\Product\Exceptions\OrderNotFoundException;
+use Illuminate\Database\Eloquent\Builder;
 use App\Domain\Product\Product;
 use App\Models\User;
 use Exception;
@@ -64,7 +65,7 @@ class OrderRepository
     }
 
 
-    public function update(array $data): array
+    public function update(array $data, int $user_id): array
     {
         DB::beginTransaction();
         try {
@@ -79,7 +80,7 @@ class OrderRepository
             );            
         }
         DB::commit();
-        return $this->find($data['id']);
+        return $this->find($data['id'], $user_id);
     }
 
     public function delete(int $orderId, int $user_id): void
@@ -97,14 +98,28 @@ class OrderRepository
 
 
     public function getOrdersByFilter(
-        User $user, 
-        ?ProductEntity $product,
+        ?string $name,
         ?string $notes,
         ?OrderStatus $status,
-        ?int $quantity,
-        ?float $cost
+        ?int $min_quantity,
+        ?int $max_quantity,
+        ?float $min_cost,
+        ?float $max_cost
     ) : array
     {
+        $orders = Order::query()
+            ->when($name, fn (Builder $query) => $query->product->where('name', 'LIKE', "%$name%"))
+            ->when($notes, fn (Builder $query) => $query->where('notes', 'LIKE', "%$notes%"))
+            ->when($min_cost, fn (Builder $query) => $query->where('cost', '>', $min_cost))
+            ->when($max_cost, fn (Builder $query) => $query->where('cost', '<', $max_cost))
+            ->when($min_quantity, fn (Builder $query) => $query->where('quantity', '>', $min_quantity))
+            ->when($max_quantity, fn (Builder $query) => $query->where('quantity', '<', $max_quantity))
+//            ->when($createdAt, fn (Builder $query) => $query->whereDate('created_at', '=', $createdAt))
+            ->get();
+        Log::debug('products found', [$orders]);
+        return $orders
+            ->map(fn (Order $order) => OrderFactory::fromModel($order))
+            ->toArray();        
         return [];
     }
 

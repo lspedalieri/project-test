@@ -40,7 +40,7 @@ class OrderService
         if (!$order) {
             throw new \Exception("Order not found");
         }
-        return $this->repository->update($order, $data);
+        return $this->repository->update($data, $user_id);
     }
 
     public function deleteOrder(int $id, int $user_id): void
@@ -56,12 +56,13 @@ class OrderService
     public function getOrdersByFilter(array $data): array
     {
         return $this->repository->getOrdersByFilter(
-            user: $data["user"],
-            product: $data["product"] ?? null,
+            name: $data["name"] ?? null,
             notes: $data["notes"] ?? null,
             status: $data["status"] ?? null,
-            quantity: $data["quantity"] ?? null,
-            cost: $data["cost"] ?? null
+            min_cost: $data["min_cost"] ?? null,
+            max_cost: $data["max_cost"] ?? null,
+            min_quantity: $data["min_quantity"] ?? null,
+            max_quantity: $data["max_quantity"] ?? null,
         );
     }
 

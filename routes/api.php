@@ -38,8 +38,8 @@ Route::group([
     'as' => 'orders.',
     'middleware' => ['auth:sanctum'],
 ], function () {
-    Route::get('orders', [OrderController::class, 'index'])->name('orders');
-    Route::get('order', [OrderController::class, 'index'])->name('show');
+    Route::get('index', [OrderController::class, 'index'])->name(' ');
+    Route::get('show', [OrderController::class, 'show'])->name('show');
     Route::get('create', [OrderController::class, 'create'])->name('create');
     Route::put('buy', [OrderController::class, 'store'])->name('buy');
     Route::get('edit', [OrderController::class, 'update'])->name('edit');

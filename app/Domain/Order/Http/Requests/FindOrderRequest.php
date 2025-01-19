@@ -29,10 +29,14 @@ class FindOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id'        => ['nullable', 'numeric', Rule::exists('orders', 'id')->where('user_id', $this->user_id)],
+            'id'        => ['nullable', 'numeric', Rule::exists('orders','id')->where('user_id', $this->user_id)->where("deleted_at", null)],
             'user_id'   => 'required|exists:users,id',
-            'product_id'=> 'nullable|exists:products,id',
+            'name'      => 'nullable|string',
             'notes'     => 'nullable|string',
+            'min_cost'     => 'nullable|numeric',
+            'max_cost'     => 'nullable|numeric',
+            'min_quantity'     => 'nullable|numeric',
+            'max_quantity'     => 'nullable|numeric',
             'status'    => 'nullable|string',
         ];
     }

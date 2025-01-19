@@ -1,0 +1,713 @@
+{
+	"info": {
+		"_postman_id": "d44bd5af-b7a9-45ee-b4be-5fa1a7a75b84",
+		"name": "Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41089390"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://local-test.com/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"local-test",
+								"com"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "admin@admin.com",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "show products",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "_token",
+								"value": "3huhKYsgcl7JOEgoxSwrHhpAH4HrGG4Gvq5RZgsx",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\" : {{user_id}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://local-test.com/api/products/index",
+							"protocol": "http",
+							"host": [
+								"local-test",
+								"com"
+							],
+							"path": [
+								"api",
+								"products",
+								"index"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "1352",
+									"disabled": true
+								},
+								{
+									"key": "order_id",
+									"value": "8598",
+									"disabled": true
+								},
+								{
+									"key": "orderDetID",
+									"value": "7566",
+									"disabled": true
+								},
+								{
+									"key": "tags",
+									"value": "natura, sport",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "speranza, fede, quando-tutto-funziona, ovvero-mai",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show product",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\" : {{user_id}},\n    \"id\" : 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://local-test.com/api/products/show?id=3&user_id=1",
+							"protocol": "http",
+							"host": [
+								"local-test",
+								"com"
+							],
+							"path": [
+								"api",
+								"products",
+								"show"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "3"
+								},
+								{
+									"key": "user_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find products",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\" : {{user_id}},\n//    \"name\" : \"odit\",\n    \"description\" : \"lorem\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://local-test.com/api/products/find",
+							"protocol": "http",
+							"host": [
+								"local-test",
+								"com"
+							],
+							"path": [
+								"api",
+								"products",
+								"find"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "1352",
+									"disabled": true
+								},
+								{
+									"key": "order_id",
+									"value": "8598",
+									"disabled": true
+								},
+								{
+									"key": "orderDetID",
+									"value": "7566",
+									"disabled": true
+								},
+								{
+									"key": "tags",
+									"value": "natura, sport",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "speranza, fede, quando-tutto-funziona, ovvero-mai",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "store product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\" : 1,\n    \"name\": \"test\",\n    \"description\":null,\n    \"barcode\": \"1564656321\",\n    \"price\": 12.5,\n    \"quantity\": 10,\n    \"restock_time\":143,\n    \"_token\"    : \"3huhKYsgcl7JOEgoxSwrHhpAH4HrGG4Gvq5RZgsx\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://local-test.com/api/products/store",
+							"protocol": "http",
+							"host": [
+								"local-test",
+								"com"
+							],
+							"path": [
+								"api",
+								"products",
+								"store"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\" : 1,\n    \"id\" : 2,\n    \"name\": \"test 2 edit\",\n    \"description\":null,\n    \"barcode\": \"21564646\",\n    \"price\": 212.5,\n    \"quantity\": 20,\n    \"restock_time\":15\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://local-test.com/api/products/update",
+							"protocol": "http",
+							"host": [
+								"local-test",
+								"com"
+							],
+							"path": [
+								"api",
+								"products",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\" : {{user_id}},\n    \"id\" : 12\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://local-test.com/api/products/delete",
+							"protocol": "http",
+							"host": [
+								"local-test",
+								"com"
+							],
+							"path": [
+								"api",
+								"products",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "show orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\" : {{user_id}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://local-test.com/api/orders/index",
+							"protocol": "http",
+							"host": [
+								"local-test",
+								"com"
+							],
+							"path": [
+								"api",
+								"orders",
+								"index"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "1352",
+									"disabled": true
+								},
+								{
+									"key": "order_id",
+									"value": "8598",
+									"disabled": true
+								},
+								{
+									"key": "orderDetID",
+									"value": "7566",
+									"disabled": true
+								},
+								{
+									"key": "tags",
+									"value": "natura, sport",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "speranza, fede, quando-tutto-funziona, ovvero-mai",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show order",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\" : {{user_id}},\n    \"id\"    : 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://local-test.com/api/orders/show",
+							"protocol": "http",
+							"host": [
+								"local-test",
+								"com"
+							],
+							"path": [
+								"api",
+								"orders",
+								"show"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "1352",
+									"disabled": true
+								},
+								{
+									"key": "order_id",
+									"value": "8598",
+									"disabled": true
+								},
+								{
+									"key": "orderDetID",
+									"value": "7566",
+									"disabled": true
+								},
+								{
+									"key": "tags",
+									"value": "natura, sport",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "speranza, fede, quando-tutto-funziona, ovvero-mai",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": {{user_id}},\n    \"id\"        : null,\n    \"name\"      : null,\n    \"notes\"     : null,\n    \"min_cost\"     : null,\n    \"max_cost\"     : null,\n    \"min_quantity\"     : null,\n    \"max_quantity\"     : null,\n    \"status\"    : null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://local-test.com/api/orders/find",
+							"protocol": "http",
+							"host": [
+								"local-test",
+								"com"
+							],
+							"path": [
+								"api",
+								"orders",
+								"find"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "1352",
+									"disabled": true
+								},
+								{
+									"key": "order_id",
+									"value": "8598",
+									"disabled": true
+								},
+								{
+									"key": "orderDetID",
+									"value": "7566",
+									"disabled": true
+								},
+								{
+									"key": "tags",
+									"value": "natura, sport",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "speranza, fede, quando-tutto-funziona, ovvero-mai",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\" : {{user_id}},\n    \"id\" : 6,\n    \"notes\": \"test edit\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://local-test.com/api/orders/update",
+							"protocol": "http",
+							"host": [
+								"local-test",
+								"com"
+							],
+							"path": [
+								"api",
+								"orders",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\" : {{user_id}},\n    \"id\" : 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://local-test.com/api/orders/delete",
+							"protocol": "http",
+							"host": [
+								"local-test",
+								"com"
+							],
+							"path": [
+								"api",
+								"orders",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "bearer_token",
+			"value": "1|UwdeHJhKRG8VOn98WqALDAnjAehKlBuoGLrPxfVaf8da4b94",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "24",
+			"type": "string"
+		}
+	]
+}

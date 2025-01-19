@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Product\Exceptions;
+namespace App\Domain\Order\Exceptions;
 
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;

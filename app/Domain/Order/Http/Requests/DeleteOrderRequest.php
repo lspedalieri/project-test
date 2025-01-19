@@ -32,8 +32,7 @@ class DeleteOrderRequest extends FormRequest
             'user_id'   => 'required|exists:users,id',
             'id'    => [
                 'required',
-                Rule::exists('orders','id')->where('user_id', $this->user_id)
-            ],
+                Rule::exists('orders','id')->where('user_id', $this->user_id)->where("deleted_at", null)            ],
         ];
     }
 
