@@ -1,28 +1,25 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link, useForm, router } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import {usePage} from '@inertiajs/vue3'
+import axios from 'axios';
+import { reactive, ref } from 'vue';
+ 
+const errors = ref({})
+const success = ref('')
 
 defineProps({
   items: Object,
   userId: {
     type: Number,
-    default: null,        
-  }
+    default: null,
+  },
 });
 
-const message = usePage().props.flash.message;
-const form = useForm({});
+//const props = usePage().props;
+//console.log(props);
 
-const deleteItem = (item, userId) => {
-  if (confirm("Are you sure you want to delete " + item.name + "?")) {
-    form.delete(`/products/delete?id=${item.id}&user_id=${userId}`).then(() => {
-      console.log('Deleted successfully');
-    }).catch((error) => {
-      console.error('Error deleting:', error);
-    });
-  }
-};
+const form = useForm({});
 
 const orderItem = (item, userId) => {
   let quantity = document.getElementById("quantity-"+item.id).value;
@@ -31,13 +28,44 @@ const orderItem = (item, userId) => {
     return;
   }
   if (confirm("Are you sure you want to buy " + quantity + " " + item.name + "?")) {
-    form.put(`/orders/buy?product_id=${item.id}&user_id=${userId}&quantity=${quantity}`).then((response) => {
+    axios.put(`/orders/buy?product_id=${item.id}&user_id=${userId}&quantity=${quantity}`).then((response) => {
       console.log('Ordered successfully');
+    }).then(res => {
+     console.log(res);
+     //alert(res);
     }).catch((error) => {
-      console.error('Error buy:', error);
+      if (error.response.status === 422) {
+        if(error.response.data.message?.quantity){
+          alert(error.response.data.message.quantity[0]);
+        }
+        if(error.response.data.message?.user_id){
+          alert(error.response.data.message.user_id[0]);
+        }
+        //console.log(error.response.data.message.quantity[0])
+      }      
+      console.error('Error buy:', error.message);
     });
   }  
 };
+
+
+const deleteItem = (item, userId) => {
+  if (confirm("Are you sure you want to delete " + item.name + "?")) {
+    axios.delete(`/products/delete?id=${item.id}&user_id=${userId}`).then(() => {
+      console.log('Deleted successfully');
+    }).then(res => {
+     console.log(res);
+     //alert(res);
+    }).catch((error) => {
+      if (error.response.status === 422) {
+        errors.value = error.response.data.errors
+        alert(error.response.data.errors);
+      }
+      console.error('Error deleting:', error.message);
+    });
+  }
+};
+
 
 $(document).ready(function () {
     $('#product-table').DataTable();
@@ -62,14 +90,8 @@ $(document).ready(function () {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
+                      <span class="text-green-600" v-if="success">{{ success }}</span>
                         <Link v-if="$page.props.auth.user.roles=='admin'" href="products/create"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Create New Product</button></Link>
-                        <div v-if="$page.props.flash.message" class="alert">
-                          {{ $page.props.flash.message }}
-                        </div>
-                        <div v-if="message"
-                          class="mb-4 text-sm font-bold tracking-wide border-l-4 border-red-700 text-center text-red-700 bg-red-100 px-2 py-4 rounded">
-                          {{ $page.props.flash.message }}
-                      </div>
                         <table id="product-table" class="table-auto w-full">
                             <thead>
                               <tr>
@@ -98,9 +120,10 @@ $(document).ready(function () {
                                     <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2" @click="deleteItem(item, userId)">Delete</button>
                                   </td>
                                   <td class="border px-4 py-2">
-                                    <input type ="number" :id="'quantity-'+item.id" class="form-control font-bold py-2 px-4 rounded ml-2" min="0" :max="item.quantity"/>
+                                    <input type ="number" :id="'quantity-'+item.id" class="form-control font-bold py-2 px-4 rounded ml-2" min="0" :max="item.quantity" :error="form.errors.quantity"/>
                                     <button v-if="item.quantity > 0" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2" @click="orderItem(item, userId)">Buy</button>
                                     <span v-else>Not available</span>
+                                    <span class="text-red-600" v-if="errors?.quantity">{{ errors.quantity[0] }}</span>
                                   </td>
                                 </tr>
                             </tbody>

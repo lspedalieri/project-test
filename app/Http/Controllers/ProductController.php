@@ -48,7 +48,7 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $this->service->createProduct($request->all());
-        return redirect(route('products.index'))->withFlash('the Product is registered!');
+        return redirect(route('products.index'))->withMessage('the Product is registered!');
     }
 
     public function edit(EditProductRequest $request)
@@ -62,14 +62,14 @@ class ProductController extends Controller
     {
         $request->except('user_id');
         $this->service->updateProduct($request->except(['user_id', '_token']));
-        return redirect(route('products.index'))->withFlash('Product updated successfully.');;
+        return redirect(route('products.index'))->withMessage('Product updated successfully.');;
     }    
 
     public function destroy(UpdateProductRequest $request)
     {
         $request->except('user_id');
         $this->service->deleteProduct($request->id);
-        return redirect(route('products.index'))->withFlash('Product deleted.');;
+        return redirect(route('products.index'))->withMessage('Product deleted.');;
     }    
 
 }

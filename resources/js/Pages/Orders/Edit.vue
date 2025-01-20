@@ -66,22 +66,11 @@
                                     <option value="sent">Sent</option>
                                     <option value="canceled">Canceled</option>
                                 </select>
-                                <!-- <select 
-                                    label="Status" 
-                                    id="status"
-                                    placeholder="Enter Status" 
-                                    v-model="form.status"
-                                    :error="form.errors.status"
-                                >
-                                    <option :value="ordered">ordered</option>
-                                    <option :value="canceled">canceled</option>
-                                    <option :value="sent">sent</option>
-                                </select> -->
-    
-                                
-                                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3 text-white">
-                                    Submit
-                                </button>
+                                <div>
+                                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3 text-white">
+                                        Submit
+                                    </button>
+                                </div>
     
                             </form>
     
