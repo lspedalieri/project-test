@@ -36,6 +36,7 @@ class UpdateOrderRequest extends FormRequest
                 Rule::exists('orders','id')->where('user_id', $this->user_id)->where("deleted_at", null)
             ],
             'notes' => 'nullable|string',
+            'status' => 'nullable|string|in:ordered,canceled,sent'
         ];
     }
 

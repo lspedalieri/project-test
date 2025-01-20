@@ -52,6 +52,7 @@ $(document).ready(function () {
                                 <th class="border px-4 py-2">Cost</th>
                                 <th class="border px-4 py-2">Quantity</th>
                                 <th class="border px-4 py-2">Status</th>
+                                <th class="border px-4 py-2">Notes</th>
                                 <th class="border px-4 py-2" width="250px">Action</th>
                               </tr>
                               </thead>
@@ -63,7 +64,9 @@ $(document).ready(function () {
                                   <td class="border px-4 py-2">{{ item.cost }}</td>
                                   <td class="border px-4 py-2">{{ item.quantity }}</td>
                                   <td class="border px-4 py-2">{{ item.status }}</td>
+                                  <td class="border px-4 py-2">{{ item.notes }}</td>
                                   <td class="border px-4 py-2">
+                                    <Link :href="`orders/edit?id=${item.id}&user_id=${userId}`"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button></Link>
                                     <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2" @click="deleteItem(item.id, userId)">Delete</button>
                                   </td>
                                 </tr>

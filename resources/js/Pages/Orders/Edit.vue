@@ -24,89 +24,52 @@
     
     const form = useForm({
         id:props.item.original[0].id,
-        name: props.item.original[0].name,
-        price: props.item.original[0].price,
-        description: props.item.original[0].description,
-        quantity: props.item.original[0].quantity,
-        //barcode: props.item.original[0].barcode,
-        restock_time: props.item.original[0].restockTime,
+        notes: props.item.original[0].notes,
+        status: props.item.original[0].status,
         user_id: props.userId,
     });
     
     const submit = () => {
-      form.post(`/products/update/`);
+      form.post(`/orders/update/`);
     };
     </script>
     
     <template>
-        <Head title="Manage Products" />
+        <Head title="Edit Order" />
     
         <AuthenticatedLayout>
             <template #header>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Edit Product {{ item }}</h2>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Edit Order</h2>
             </template>
     
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900">
-                            <Link href="/products"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Back</button></Link>
+                            <Link href="/orders"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Back</button></Link>
                             
                             <form @submit.prevent="submit">
                                 <InputField 
-                                    label="Name" 
-                                    id="name"
+                                    label="Notes" 
+                                    id="notes"
                                     type="text" 
-                                    placeholder="Enter Name" 
-                                    v-model="form.name"
-                                    :error="form.errors.name"
+                                    placeholder="Enter Notes" 
+                                    v-model="form.notes"
+                                    :error="form.errors.notes"
                                 />
 
-                                <InputField 
-                                    label="Description" 
-                                    id="description"
-                                    type="text" 
-                                    placeholder="Enter Description" 
-                                    v-model="form.description"
-                                    :error="form.errors.description"
-                                />
-                                
-                                <!-- <InputField 
-                                    label="Barcode" 
-                                    id="barcode"
-                                    type="text" 
-                                    disabled=0
-                                    placeholder="Enter Barcode" 
-                                    v-model="form.barcode"
-                                    :error="form.errors.barcode"
-                                />                                 -->
+                                <!-- <select 
+                                    label="Status" 
+                                    id="status"
+                                    placeholder="Enter Status" 
+                                    v-model="form.status"
+                                    :error="form.errors.status"
+                                >
+                                    <option :value="ordered">ordered</option>
+                                    <option :value="canceled">canceled</option>
+                                    <option :value="sent">sent</option>
+                                </select> -->
     
-                                <InputField 
-                                    label="Price" 
-                                    id="price"
-                                    type="number" 
-                                    placeholder="Enter Price" 
-                                    v-model="form.price"
-                                    :error="form.errors.price"
-                                />
-    
-                                <InputField 
-                                    label="Quantity" 
-                                    id="quantity"
-                                    type="number" 
-                                    placeholder="Enter quantity" 
-                                    v-model="form.quantity"
-                                    :error="form.errors.quantity"
-                                />
-                                
-                                <InputField 
-                                    label="Restock Time" 
-                                    id="restock_time"
-                                    type="number" 
-                                    placeholder="Enter Restock Time" 
-                                    v-model="form.restock_time"
-                                    :error="form.errors.restock_time"
-                                />
                                 
                                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3 text-white">
                                     Submit

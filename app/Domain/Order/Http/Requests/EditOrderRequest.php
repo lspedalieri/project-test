@@ -32,7 +32,9 @@ class EditOrderRequest extends FormRequest
         return [
             'id'    => [
                 'required',
-                Rule::exists('orders','id')->where('user_id', $this->user_id)->where("deleted_at", null)            ],
+                Rule::exists('orders','id')->where('user_id', $this->user_id)->where("deleted_at", null)
+            ],
+            'user_id' => 'required|string|exists:users,id'
         ];
     }
 

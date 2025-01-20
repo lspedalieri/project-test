@@ -42,7 +42,7 @@
 - You can verify if the project is working by opening the browser. For example, if it’s set to 80:
 
   ```
-  http://local-test.com
+  https://local-test.com
   ```
 
 #### 3. Configure Laravel project 
