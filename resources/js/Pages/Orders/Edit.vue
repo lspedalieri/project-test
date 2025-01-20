@@ -57,7 +57,15 @@
                                     v-model="form.notes"
                                     :error="form.errors.notes"
                                 />
-
+                                <select 
+                                    v-model="form.status"
+                                    :error="form.errors.status"
+                                >
+                                    <option disabled value="">Please select one</option>
+                                    <option value="ordered">Ordered</option>
+                                    <option value="sent">Sent</option>
+                                    <option value="canceled">Canceled</option>
+                                </select>
                                 <!-- <select 
                                     label="Status" 
                                     id="status"
