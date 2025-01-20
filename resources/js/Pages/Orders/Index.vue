@@ -39,6 +39,10 @@ $(document).ready(function () {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
+                      <div v-if="message"
+                          class="mb-4 text-sm font-bold tracking-wide border-l-4 border-red-700 text-center text-red-700 bg-red-100 px-2 py-4 rounded">
+                          {{ $page.props.flash.message }}
+                      </div>
                         <table id="order-table" class="table-auto w-full">
                             <thead>
                               <tr>

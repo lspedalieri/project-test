@@ -18,7 +18,7 @@ class UserSeeder extends Seeder{
         DB::table('users')->insert([
             [
                 'name' => 'admin',
-                'email' => fake()->unique()->safeEmail(),
+                'email' => "admin@example.com", //fake()->unique()->safeEmail(),
                 'email_verified_at' => now(),
                 'roles' => 'admin',
                 'password' => Hash::make('password'),
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder{
             ],
             [
                 'name' => 'user',
-                'email' => fake()->unique()->safeEmail(),
+                'email' => "user@example.com", //fake()->unique()->safeEmail(),
                 'email_verified_at' => now(),
                 'roles' => 'user',
                 'password' => Hash::make('password'),

@@ -101,6 +101,17 @@
   php artisan db:seed DatabaseSeeder
   ```
 
+#### Test
+- The endpoints can be found in the Postman collection "Test.postman_collection.json" in the root of the project. 
+- Steps:
+  - login with credentials "admin@example.com" for admin and "user@example.com" for a user, the password is "password"
+  - Use the "service-api" parameter as bearer token in the authorization parameters to use the other api
+  
+  ```
+  ![login result](https://i.ibb.co/TqPzWd5/Schermata-del-2025-01-20-09-49-52.png)
+  ![how to set the bearer token variable](https://i.ibb.co/wLWSxb1/Schermata-del-2025-01-20-09-54-52.png)
+  ```
+
 #### Some useful commands
 
 - Enter the php container (php is the name of the service from docker-compose.yml)
@@ -116,3 +127,4 @@
   docker compose run --rm php /bin/sh
   chown -R laravel:laravel /var/www/html
   ```
+

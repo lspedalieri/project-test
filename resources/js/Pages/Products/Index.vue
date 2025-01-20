@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, useForm, router } from '@inertiajs/vue3';
+import {usePage} from '@inertiajs/vue3'
 
 defineProps({
   items: Object,
@@ -10,6 +11,7 @@ defineProps({
   }
 });
 
+const message = usePage().props.flash.message;
 const form = useForm({});
 
 const deleteItem = (item, userId) => {
@@ -61,10 +63,13 @@ $(document).ready(function () {
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <Link v-if="$page.props.auth.user.roles=='admin'" href="products/create"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Create New Product</button></Link>
-                        <!-- <input type="search" v-model="searchField" > -->
                         <div v-if="$page.props.flash.message" class="alert">
                           {{ $page.props.flash.message }}
                         </div>
+                        <div v-if="message"
+                          class="mb-4 text-sm font-bold tracking-wide border-l-4 border-red-700 text-center text-red-700 bg-red-100 px-2 py-4 rounded">
+                          {{ $page.props.flash.message }}
+                      </div>
                         <table id="product-table" class="table-auto w-full">
                             <thead>
                               <tr>
