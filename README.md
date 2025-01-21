@@ -101,6 +101,21 @@
   php artisan db:seed DatabaseSeeder
   ```
 
+#### 6. Interfaces
+
+- Login page (root page or /login)
+![login Page](https://i.ibb.co/zsP7Wf5/Login-page.png)
+
+- Product page for admins (/products)
+![Product page for admins](https://i.ibb.co/1fYFrCH/Schermata-del-2025-01-21-09-35-23.png)
+
+- Product page for users (/products)
+![Product page for users](https://i.ibb.co/Mp5pRQr/Order-page.png)
+
+- Order page (/orders)
+![Order page](https://i.ibb.co/3RPvcsk/Product-page-for-users.png)
+
+
 #### Test
 - The endpoints can be found in the Postman collection "Test.postman_collection.json" in the root of the project. 
 - Steps:
