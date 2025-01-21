@@ -7,6 +7,11 @@
     - `php` - Folder for php configuration files
 - `docker-compose.yml` - Docker compose configuration file
 
+- This laravel project uses the Domain Driven Design code structure and logic: the logic of Products and Orders is splitted on Controllers, Services and Repositories under App\Domain namespace
+
+- The interfaces are written entirely in Vue 3 using Inertia.js
+- There are endpoints for the interfaces and separated API REST. The API tests are in the Postman collection "Test.postman_collection.json" in the root of the project. 
+
 ### Step-by-Step Guide
 
 
@@ -14,8 +19,13 @@
 
 - To install the docker engine on Linux, follow this guide https://docs.docker.com/engine/install/ubuntu/
 
-- Download or clone the project
+- After the Docker installation you can give useful permission to your user
 
+  ```
+  sudo usermod -aG docker your-user
+  ```
+
+- Download or clone the project
 
   ```
   sudo git clone https://github.com/lspedalieri/project-test.git
@@ -54,7 +64,7 @@
 -  Run the following commands to install Laravel library and set the configuration:
 
     ```
-    composer install .
+    composer install
     ```
 
 - Copy .env.example file in .env
@@ -119,10 +129,12 @@
 
 #### 6. Interfaces
 
-- You can verify if the project is working by opening the browser. For example, if it’s set to 80:
+- You can verify if the project is working by opening the browser. For example, if it’s set port 80
 
   ```
   https://local-test.com
+  or
+  http://local-test.com
   ```
 
 - Login page (root page or /login)
@@ -167,6 +179,6 @@
 
   ```
   docker compose run --rm php /bin/sh
-  chown -R laravel:laravel /var/www/html
+  chown -R laravel:laravel /var/www
   ```
 
