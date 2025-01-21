@@ -12,20 +12,22 @@
 
 #### 1. Build the Project Using Docker Compose
 
-- Run this command
+- To install the docker engine on Linux, follow this guide https://docs.docker.com/engine/install/ubuntu/
+
+- Download or clone the project
+
+
+  ```
+  sudo git clone https://github.com/lspedalieri/project-test.git
+  ```
+
+- After download the project, run the following command to build the Docker containers
   
   ```
   docker compose build
   ```
 
-#### 2. Download Laravel dependencies
-
--  Run this command:
-
-  ```
-  docker compose run --rm composer install .
-  php artisan key:generate
-  ```
+- The images should have all the required dependencies for PHP 8.2 installed on the system
 
 - kill any web services on port 80 and 3306 on the host machine because can interfere with docker services.
 
@@ -39,31 +41,44 @@
   docker compose up -d
   ```
 
-- You can verify if the project is working by opening the browser. For example, if it’s set to 80:
+#### 2. Download Laravel dependencies
+
+- Enter in the Docker shell to work directly in the workdir
 
   ```
-  https://local-test.com
+  docker compose exec app bash
   ```
 
 #### 3. Configure Laravel project 
- 
+
+-  Run the following commands to install Laravel library and set the configuration:
+
+    ```
+    composer install .
+    ```
 
 - Copy .env.example file in .env
 
-  ```
-  cp .env.example .env
-  ```
+    ```
+    cp .env.example .env
+    ```
 
-- Check DB credentials
+    ```
+    php artisan key:generate
+    ```
+
+
+- Check DB credentials in .env file
   ```
   DB_CONNECTION=mysql       # connection name, we use mysql
   DB_HOST=mysql             # name of mysql service in docker-compose.yml
   DB_PORT=3306              # mysql standart port 
-  DB_DATABASE=app           # database name from MYSQL_DATABASE in docker-compose.yml
+  DB_DATABASE=app           # database name from MYSQL_DATABASE in 
   DB_USERNAME=root          # username from MYSQL_USER in docker-compose.yml
-  DB_PASSWORD=              # user password from MYSQL_PASSWORD in docker-compose.yml
+  DB_PASSWORD=              # user password from MYSQL_PASSWORD in 
   ```
-- Restart all services
+
+- Exit from Docker shell with CTRL+d and Restart all the services
   
   ```
   docker compose down
@@ -74,7 +89,8 @@
 - The project needs Node 20 on the host machine. In the root of the project launch. If nvm is present, just set Node 20
   
   ```
-  apt install nvm
+  sudo apt-get update
+  sudo apt install nvm
   nvm install 20
   nvm version 20
 
@@ -102,6 +118,12 @@
   ```
 
 #### 6. Interfaces
+
+- You can verify if the project is working by opening the browser. For example, if it’s set to 80:
+
+  ```
+  https://local-test.com
+  ```
 
 - Login page (root page or /login)
 
