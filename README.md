@@ -104,16 +104,16 @@
 #### 6. Interfaces
 
 - Login page (root page or /login)
-![login Page](https://i.ibb.co/zsP7Wf5/Login-page.png)
+!(https://i.ibb.co/zsP7Wf5/Login-page.png)
 
 - Product page for admins (/products)
-![Product page for admins](https://i.ibb.co/1fYFrCH/Schermata-del-2025-01-21-09-35-23.png)
+!(https://i.ibb.co/1fYFrCH/Schermata-del-2025-01-21-09-35-23.png)
 
 - Product page for users (/products)
-![Product page for users](https://i.ibb.co/Mp5pRQr/Order-page.png)
+!(https://i.ibb.co/Mp5pRQr/Order-page.png)
 
 - Order page (/orders)
-![Order page](https://i.ibb.co/3RPvcsk/Product-page-for-users.png)
+!(https://i.ibb.co/3RPvcsk/Product-page-for-users.png)
 
 
 #### Test
@@ -123,8 +123,8 @@
   - Use the "service-api" parameter as bearer token in the authorization parameters to use the other api
   
 
-![login result](https://i.ibb.co/TqPzWd5/Schermata-del-2025-01-20-09-49-52.png)
-![how to set the bearer token variable](https://i.ibb.co/wLWSxb1/Schermata-del-2025-01-20-09-54-52.png)
+!(https://i.ibb.co/TqPzWd5/Schermata-del-2025-01-20-09-49-52.png)
+!(https://i.ibb.co/wLWSxb1/Schermata-del-2025-01-20-09-54-52.png)
 
 
 #### Some useful commands
