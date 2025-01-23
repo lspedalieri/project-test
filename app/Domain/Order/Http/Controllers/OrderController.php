@@ -44,7 +44,7 @@ class OrderController extends Controller
     {
         $product = Product::findOrFail($request->product_id);
         $user = User::findOrFail(Auth::id());
-        $request->merge(['product' => $product, 'user' => $user]);
+        $request->merge(['product' => $product, 'user' => $user, 'cost' => $product->price * $request->quantity]);
         $order = $this->service->createOrder($request->all());
         return response()->json($order, 201);
     }

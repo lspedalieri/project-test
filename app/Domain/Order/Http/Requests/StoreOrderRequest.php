@@ -31,7 +31,10 @@ class StoreOrderRequest extends FormRequest
      */
     public function rules(): array
     {
-        $max_quantity = Product::where('id', $this->product_id)->first()->quantity;
+        $max_quantity = 0;
+        $product = Product::where('id', $this->product_id)->first();
+        if(!empty($product)) $max_quantity = $product->quantity;
+
         return [
             'user_id'   => 'required|exists:users,id',
             'product_id'=> 'required|integer|exists:products,id',
@@ -45,10 +48,15 @@ class StoreOrderRequest extends FormRequest
     }
 
     public function messages(){
+        $restock_time = 0;
+        $product = Product::where('id', $this->product_id)->first();
+        if(!empty($product)) $restock_time = $product->restock_time;
         return [
-            'quantity.exists'   => 'Quantity not available',
+            'product_id'        => 'Product doesn\'t exists',
+            'quantity.exists'   => "Quantity not available. Buy a lower item quantity or check again in {$restock_time} days",
             'quantity.required' => 'must be more than zero',
             'quantity.min'      => 'Select a product',
+            'quantity.max'      => "Quantity not available. Buy a lower item quantity or check again in {$restock_time} days",
             'quantity.integer'  => 'Quantity must be an integer number',
         ];
     }

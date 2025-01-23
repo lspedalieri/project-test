@@ -594,6 +594,46 @@
 					"response": []
 				},
 				{
+					"name": "buy order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\" : {{user_id}},\n    \"product_id\" : 6,\n    \"quantity\": 20\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://local-test.com/api/orders/buy",
+							"protocol": "http",
+							"host": [
+								"local-test",
+								"com"
+							],
+							"path": [
+								"api",
+								"orders",
+								"buy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "edit order",
 					"request": {
 						"auth": {
