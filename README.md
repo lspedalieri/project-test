@@ -15,7 +15,53 @@
 ### Step-by-Step Guide
 
 
-#### 1. Build the Project Using Docker Compose
+#### 1. Install HTTPS certificates locally
+
+- Install certutils to manage certificates locally
+  ```
+  sudo apt-get install libnss3-tools
+  ```
+
+- Download the compiled binaries for Linux
+  ```
+  curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
+  chmod +x mkcert-v*-linux-amd64
+  sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
+  ```
+
+- Launch local CA installation
+  ```
+  mkcert -install
+  ```
+
+- Generate certificates. From docker/nginx folder launch certificate creation
+
+  ```
+  cd docker/nginx
+  mkcert -cert-file local-ssl.crt -key-file local-key.key local-test.com
+  ```
+
+
+- Change certificate permission to allow Docker to move them in certificate folders
+  ```
+  sudo chmod 644 local-key.key
+  ```
+
+- Add local domain in /etc/hosts
+  ```
+  127.0.0.1 local-test.com
+  ```
+
+- if the certificates weren't copied in the proper directory by nginx/Dockerfile, copy them manully from the Docker shell as root
+  
+  ```
+  docker exec -u 0 -it mycontainer bash
+  cp /var/www/docker/nginx/local-ssl.crt /etc/ssl/certs/local-ssl.crt
+  cp /var/www/docker/nginx/local-key.key /etc/ssl/certs/local.key
+  ```
+
+
+#### 2. Build the Project Using Docker Compose
 
 - To install the docker engine on Linux, follow this guide https://docs.docker.com/engine/install/ubuntu/
 
@@ -51,7 +97,7 @@
   docker compose up -d
   ```
 
-#### 2. Download Laravel dependencies
+#### 3. Download Laravel dependencies
 
 - Enter in the Docker shell to work directly in the workdir
 
@@ -59,7 +105,7 @@
   docker compose exec app bash
   ```
 
-#### 3. Configure Laravel project 
+#### 4. Configure Laravel project 
 
 -  Run the following commands to install Laravel library and set the configuration:
 
@@ -94,7 +140,7 @@
   docker compose down
   docker compose up -d
   ```
-#### 4. Set Node and npm
+#### 5. Set Node and npm
   
 - The project needs Node 20 on the host machine. In the root of the project launch. If nvm is present, just set Node 20
   
@@ -111,7 +157,7 @@
   npm run dev
   ```
 
-#### 5. Run Migrations
+#### 6. Run Migrations
 - Run migration and seeder from the host machine shell
 
   ```
@@ -127,7 +173,7 @@
   php artisan db:seed DatabaseSeeder
   ```
 
-#### 6. Interfaces
+#### 7. Interfaces
 
 - You can verify if the project is working by opening the browser. For example, if it’s set port 80
 
