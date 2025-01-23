@@ -44,6 +44,7 @@
 
 - Change certificate permission to allow Docker to move them in certificate folders
   ```
+  sudo chmod 644 local-ssl.crt
   sudo chmod 644 local-key.key
   ```
 
@@ -52,10 +53,10 @@
   127.0.0.1 local-test.com
   ```
 
-- if the certificates weren't copied in the proper directory by nginx/Dockerfile, copy them manully from the Docker shell as root
+- if the certificates weren't copied in the proper directory by nginx/Dockerfile, copy them manully from the Docker shell as root. Check container names with docker ps (should be test-app)
   
   ```
-  docker exec -u 0 -it mycontainer bash
+  docker exec -u 0 -it test-app bash
   cp /var/www/docker/nginx/local-ssl.crt /etc/ssl/certs/local-ssl.crt
   cp /var/www/docker/nginx/local-key.key /etc/ssl/certs/local.key
   ```
